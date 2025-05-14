@@ -1,0 +1,11 @@
+.env
+node_modules/
+package-lock.json
+log.log
+.idea/
+static/assets/
+static/fonts/
+static/img/
+static/index.html/
+static/vite.svg/
+*.lock
