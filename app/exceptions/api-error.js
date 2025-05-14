@@ -1,29 +1,26 @@
 module.exports = class ApiError extends Error {
   status;
-  errors;
 
-  constructor(status, message, errors = [], data = []) {
+  constructor(status, message) {
     super();
     this.message = message;
     this.status = status;
-    this.errors = errors;
-    this.data = data;
   }
 
   static BadRequest(message, data = [], errors = []) {
-    return new ApiError(400, message, errors, data);
+    return new ApiError(400, message ?? "Invalid request", errors, data);
   }
 
-  static UnauthorizedError() {
-    return new ApiError(401, "User is not authorized!");
+  static UnauthorizedError(message) {
+    return new ApiError(401, message ?? "User is not authorized!");
   }
 
-  static Forbidden() {
-    return new ApiError(403, "User is not allowed to access this resource!");
+  static Forbidden(message) {
+    return new ApiError(403, message ?? "User is not allowed to access this resource!");
   }
 
-  static NotFound() {
-    return new ApiError(404, "Resource not found!");
+  static NotFound(message) {
+    return new ApiError(404, message ?? "Resource not found!");
   }
 
   static InternalServerError() {

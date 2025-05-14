@@ -44,7 +44,7 @@ module.exports = ({ database, logger }) =>
 			);
 			console.log("error:", error, "error.status:", error.status, "error.message:", error.message);
 			if (error?.status) {
-				return res.status(400).json(error);
+				return res.status(error.status).json(error);
 			} else {
 				return res.status(500).json({ message: "Internal server error" });
 			}

@@ -1,9 +1,9 @@
-const { updateExistingDocuments } = require("./setup/user");
+const { updateExistingDocuments } = require("./setup/subscriptions");
 
 module.exports = (db) => {
   updateExistingDocuments(db)
     .then(() => {
-      console.log("User documents updated");
+      console.log("Subscription documents updated");
     })
     .catch((err) => {
       console.error("Error updating User documents:", err);

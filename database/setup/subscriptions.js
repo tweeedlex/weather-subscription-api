@@ -1,5 +1,5 @@
 const updateExistingDocuments = async (db) => {
-  const schemaPaths = db.User.schema.paths;
+  const schemaPaths = db.Subscription.schema.paths;
   const updates = {};
 
   for (const path in schemaPaths) {
@@ -11,15 +11,15 @@ const updateExistingDocuments = async (db) => {
     }
   }
 
-  const users = await db.User.find().lean();
+  const subscriptions = await db.Subscription.find().lean();
 
   const bulkOps = [];
 
-  users.forEach((user) => {
+  subscriptions.forEach((Subscription) => {
     const updateFields = {};
 
     for (const key in updates) {
-      if (!user.hasOwnProperty(key)) {
+      if (!Subscription.hasOwnProperty(key)) {
         updateFields[key] = updates[key];
       }
     }
@@ -27,7 +27,7 @@ const updateExistingDocuments = async (db) => {
     if (Object.keys(updateFields).length > 0) {
       bulkOps.push({
         updateOne: {
-          filter: { _id: user._id },
+          filter: { _id: Subscription._id },
           update: { $set: updateFields },
         },
       });
@@ -35,10 +35,10 @@ const updateExistingDocuments = async (db) => {
   });
 
   if (bulkOps.length > 0) {
-    const result = await db.User.bulkWrite(bulkOps);
+    const result = await db.Subscription.bulkWrite(bulkOps);
     console.log("Bulk write result:", result);
   } else {
-    console.log("No updates required for users");
+    console.log("No updates required for subscriptions");
   }
 };
 
