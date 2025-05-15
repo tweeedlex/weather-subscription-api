@@ -26,13 +26,13 @@ module.exports = Router({ mergeParams: true }).post("/subscribe", async (req, re
       },
     });
 
-    const code = Math.floor(100000 + Math.random() * 900000);
+    const token = Math.random().toString(36).substring(2, 8).toUpperCase();
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Weather forecast subscription confirmation",
       text: `Thank you for subscribing to our weather forecast service.
-Your confirmation code: ${code}`
+Your confirmation token: ${token}`
     };
 
     try {
@@ -42,7 +42,7 @@ Your confirmation code: ${code}`
       return next(ApiError.BadRequest("Failed to send email. Try using another email address."));
     }
 
-    await db.Subscription.create({ email, city, frequency, code });
+    await db.Subscription.create({ email, city, frequency, token });
     return res.json({ message: "Subscription successful. Confirmation email sent." })
   } catch (e) {
     next(e)

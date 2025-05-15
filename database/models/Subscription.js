@@ -5,12 +5,12 @@ const subscriptionSchema = mongoose.Schema({
 	city: { type: String, required: true },
 	frequency: { type: String, enum: ["hourly", "daily"], required: true },
 	confirmed: { type: Boolean, default: false },
-	code: { type: Number, required: true },
+	token: { type: String, required: true },
 });
 
 subscriptionSchema.methods.toJSON = () => {
 	const obj = this.toObject();
-	delete obj.code;
+	delete obj.token;
 	return obj;
 }
 
