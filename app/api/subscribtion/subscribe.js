@@ -32,7 +32,7 @@ module.exports = Router({ mergeParams: true }).post("/subscribe", async (req, re
       to: email,
       subject: "Weather forecast subscription confirmation",
       text: `Thank you for subscribing to our weather forecast service.
-Your confirmation token: ${token}`
+Your token: ${token}`
     };
 
     try {

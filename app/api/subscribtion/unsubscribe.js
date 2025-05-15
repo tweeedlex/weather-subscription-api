@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-module.exports = Router({ mergeParams: true }).get("/confirm/:token", async (req, res, next) => {
+module.exports = Router({ mergeParams: true }).get("/unsubscribe/:token", async (req, res, next) => {
   try {
     const { db, ApiError } = req;
     const { token } = req.params;
@@ -13,10 +13,9 @@ module.exports = Router({ mergeParams: true }).get("/confirm/:token", async (req
       return next(ApiError.NotFound("Token not found"));
     }
 
-    subscription.confirmed = true;
-    await subscription.save();
+    await db.Subscription.deleteOne({ token });
 
-    return res.json({ message: "Subscription confirmed successfully" })
+    return res.json({ message: "Unsubscribed successfully" });
   } catch (e) {
     next(e);
   }
