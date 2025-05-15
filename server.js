@@ -1,6 +1,7 @@
 require("dotenv").config();
 const port = process.env.PORT || 8080;
 const setupDatabase = require("./database/setupDatabase.js");
+const setupCrons = require("./crons/setupCrons");
 const logger = require("./createLogger.js")();
 const database = require("./database/createDatabase.js")({
 	logger,
@@ -10,6 +11,7 @@ const app = require("./app/createExpressApp.js")({ logger, database });
 const server = require("http").createServer();
 
 setupDatabase(database);
+setupCrons(database);
 
 server
 	.on("request", app)

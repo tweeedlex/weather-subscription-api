@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const nodemailer = require("nodemailer");
+const { createTransport } = require("../../helpers/mail");
 
 module.exports = Router({ mergeParams: true }).post("/subscribe", async (req, res, next) => {
   try {
@@ -15,16 +15,7 @@ module.exports = Router({ mergeParams: true }).post("/subscribe", async (req, re
       return next(ApiError.Conflict("Email already subscribed"));
     }
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+    const transport = createTransport();
 
     const token = Math.random().toString(36).substring(2, 8).toUpperCase();
     const mailOptions = {
@@ -36,7 +27,7 @@ Your token: ${token}`
     };
 
     try {
-      await transporter.sendMail(mailOptions);
+      await transport.sendMail(mailOptions);
     } catch (error) {
       console.log("Error sending email:", error);
       return next(ApiError.BadRequest("Failed to send email. Try using another email address."));
