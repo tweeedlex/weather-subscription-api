@@ -95,7 +95,7 @@
 
     axios.post('/api/subscribe', formData)
     .then(function(response) {
-      messageEl.textContent = 'Subscription request sent! Please check your email to confirm.';
+      messageEl.textContent = response.data.message;
       messageEl.classList.add('text-green-600');
       document.getElementById('subscribeForm').reset();
     })
@@ -116,7 +116,7 @@
 
     axios.get(`/api/confirm/${token}/`)
     .then(function(response) {
-      messageEl.textContent = 'Subscription confirmed! You will now receive weather updates.';
+      messageEl.textContent = response.data.message;
       messageEl.classList.add('text-green-600');
       document.getElementById('confirmForm').reset();
     })
@@ -137,7 +137,7 @@
 
     axios.get(`/api/unsubscribe/${token}`)
     .then(function(response) {
-      messageEl.textContent = 'You have been unsubscribed from weather updates.';
+      messageEl.textContent = response.data.message;
       messageEl.classList.add('text-green-600');
       document.getElementById('unsubscribeForm').reset();
     })
