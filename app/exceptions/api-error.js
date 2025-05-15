@@ -23,6 +23,10 @@ module.exports = class ApiError extends Error {
     return new ApiError(404, message ?? "Resource not found!");
   }
 
+  static Conflict(message) {
+    return new ApiError(409, message ?? "Resource already exists!");
+  }
+
   static InternalServerError() {
     return new ApiError(500, "Internal server error!");
   }

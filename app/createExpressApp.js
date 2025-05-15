@@ -4,8 +4,7 @@ const expressWinston = require("express-winston");
 const apiRouter = require("./api/createApiRouter.js")();
 const cors = require("cors");
 const ApiError = require("./exceptions/api-error.js");
-const fs = require("fs");
-const path = require("path");
+const fileUpload = require("express-fileupload");
 
 module.exports = ({ database, logger }) =>
 	express()
@@ -35,6 +34,7 @@ module.exports = ({ database, logger }) =>
 				credentials: true,
 			})
 		)
+		.use(fileUpload())
 		.use("/", express.static("static"))
 		.use("/api", apiRouter)
 		.use((req, res) => res.sendStatus(404))
