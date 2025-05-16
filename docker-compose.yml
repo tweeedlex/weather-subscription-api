@@ -7,9 +7,10 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     ports:
-      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+      - "${MONGODB_LOCAL_PORT:-27017}:${MONGODB_DOCKER_PORT:-27017}"
     volumes:
       - db:/data/db
+
   app:
     depends_on:
       - mongodb
@@ -17,7 +18,7 @@ services:
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - $PORT:$NODE_DOCKER_PORT
+      - "${PORT:-5005}:${NODE_DOCKER_PORT:-5005}"
     environment:
       - DB_HOST=mongodb
       - DB_USER=$MONGODB_USER
