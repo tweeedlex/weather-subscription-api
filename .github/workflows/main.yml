@@ -12,6 +12,7 @@ jobs:
     env:
       SSH_USER: ${{ secrets.VPS_SSH_USER }}
       SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     steps:
       - name: Checkout repo
@@ -20,7 +21,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: $SSH_PRIVATE_KEY
 
       - name: Sync files to VPS
         run: |
