@@ -21,7 +21,7 @@ jobs:
 
       - name: Sync files to VPS
         run: |
-          rsync -avz --delete --exclude='.git' ./ ${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }}:/var/www/genesis-case-task/ \
+          rsync -avz --delete --exclude='.git' --exclude='.env' ./ ${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }}:/var/www/genesis-case-task/ \
           -e "ssh -o StrictHostKeyChecking=no"
 
       - name: Run Docker Compose on VPS
