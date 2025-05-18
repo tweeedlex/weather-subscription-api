@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { createTransport } = require("../../helpers/mail");
+const { createTransport } = require(`${process.cwd()}/app/helpers/mail`);
 
 module.exports = Router({ mergeParams: true }).post("/subscribe", async (req, res, next) => {
   try {
